@@ -362,12 +362,12 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiExeperienceExeperience extends Schema.CollectionType {
-  collectionName: 'exeperiences';
+export interface ApiExperienceExperience extends Schema.CollectionType {
+  collectionName: 'experiences';
   info: {
-    singularName: 'exeperience';
-    pluralName: 'exeperiences';
-    displayName: 'Exeperiences';
+    singularName: 'experience';
+    pluralName: 'experiences';
+    displayName: 'Experiences';
   };
   options: {
     draftAndPublish: true;
@@ -392,17 +392,30 @@ export interface ApiExeperienceExeperience extends Schema.CollectionType {
           localized: true;
         };
       }>;
-    started_at: Attribute.Date &
+    contract: Attribute.String &
       Attribute.Required &
       Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
         };
       }>;
+    company_logo: Attribute.Media<'images'> &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    started_at: Attribute.Date &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     finished_at: Attribute.Date &
       Attribute.SetPluginOptions<{
         i18n: {
-          localized: true;
+          localized: false;
         };
       }>;
     description: Attribute.Text &
@@ -412,31 +425,25 @@ export interface ApiExeperienceExeperience extends Schema.CollectionType {
           localized: true;
         };
       }>;
-    contract: Attribute.String &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::exeperience.exeperience',
+      'api::experience.experience',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::exeperience.exeperience',
+      'api::experience.experience',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     localizations: Attribute.Relation<
-      'api::exeperience.exeperience',
+      'api::experience.experience',
       'oneToMany',
-      'api::exeperience.exeperience'
+      'api::experience.experience'
     >;
     locale: Attribute.String;
   };
@@ -878,7 +885,7 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::exeperience.exeperience': ApiExeperienceExeperience;
+      'api::experience.experience': ApiExperienceExperience;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
