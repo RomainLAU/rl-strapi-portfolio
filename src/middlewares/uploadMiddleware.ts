@@ -3,7 +3,6 @@
 import { setCreatorFields } from "@strapi/utils";
 
 const setPathIdAndPath = async (folder, strapi) => {
-  // Récupérer la valeur maximale de pathId depuis la base de données
   const result = await strapi.db.query("plugin::upload.folder").findMany({
     select: ["pathId"],
     orderBy: { pathId: "desc" },
@@ -12,7 +11,6 @@ const setPathIdAndPath = async (folder, strapi) => {
 
   const max = result.length > 0 ? result[0].pathId : 0;
 
-  // Vérifiez que max est un nombre
   if (isNaN(max)) {
     throw new Error(`Invalid max value: ${max}`);
   }
@@ -35,21 +33,17 @@ const setPathIdAndPath = async (folder, strapi) => {
 
 module.exports = (config, { strapi }) => {
   return async (ctx, next) => {
-    // Only run this middleware for the upload endpoint
     if (ctx.url === "/upload" && ctx.method === "POST") {
       if (ctx.request.body) {
         try {
           let folderName;
           const rootFolder = process.env.CLOUDINARY_FOLDER;
 
-          // get upload plugin configuration
           const config = strapi.config.get("plugin.upload");
 
-          // get file extension
           const fileInfo = JSON.parse(ctx?.request?.body?.fileInfo);
           const extension = fileInfo.name.split(".").pop().toLowerCase();
 
-          // config folder option to save in cloudinary
           if (
             extension === "jpg" ||
             extension === "jpeg" ||
@@ -65,15 +59,12 @@ module.exports = (config, { strapi }) => {
             config.actionOptions.uploadStream.folder = `${rootFolder}/${folderName}`;
           }
 
-          // get folders in media library
           const folders = await strapi.entityService.findMany(
             "plugin::upload.folder"
           );
 
-          // find folder from folders in media library
           let folder = folders.find((folder) => folder.name === folderName);
 
-          // create folder to save in admin panel if not exist
           if (!folder) {
             const folderData = { name: folderName, parent: null };
             const user = ctx.state.user;
@@ -87,7 +78,6 @@ module.exports = (config, { strapi }) => {
             );
           }
 
-          // set folder option in request to save in admin panel
           fileInfo.folder = folder.id;
           ctx.request.body.fileInfo = JSON.stringify(fileInfo);
         } catch (error) {
@@ -99,7 +89,6 @@ module.exports = (config, { strapi }) => {
       }
     }
 
-    // Continue to the next middleware
     await next();
   };
 };
