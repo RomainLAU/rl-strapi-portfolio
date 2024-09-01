@@ -788,6 +788,40 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiDeployDeploy extends Schema.CollectionType {
+  collectionName: 'deploys';
+  info: {
+    singularName: 'deploy';
+    pluralName: 'deploys';
+    displayName: 'Deploy';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    status: Attribute.Enumeration<
+      ['pending', 'in_progress', 'completed', 'failed']
+    > &
+      Attribute.Required &
+      Attribute.DefaultTo<'pending'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::deploy.deploy',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::deploy.deploy',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiExperienceExperience extends Schema.CollectionType {
   collectionName: 'experiences';
   info: {
@@ -1007,6 +1041,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::deploy.deploy': ApiDeployDeploy;
       'api::experience.experience': ApiExperienceExperience;
       'api::formation.formation': ApiFormationFormation;
       'api::skill.skill': ApiSkillSkill;

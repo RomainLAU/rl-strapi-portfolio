@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "deploys",
+  "info": {
+    "singularName": "deploy",
+    "pluralName": "deploys",
+    "displayName": "Deploy",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "in_progress",
+        "completed",
+        "failed"
+      ],
+      "required": true,
+      "default": "pending"
+    }
+  }
+}
