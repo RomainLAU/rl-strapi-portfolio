@@ -993,6 +993,69 @@ export interface ApiFormationFormation extends Schema.CollectionType {
   };
 }
 
+export interface ApiMeMe extends Schema.SingleType {
+  collectionName: 'us';
+  info: {
+    singularName: 'me';
+    pluralName: 'us';
+    displayName: 'me';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    fulllname: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    job: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    images: Attribute.Media<'images' | 'videos', true> &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    description: Attribute.RichText &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    status: Attribute.Enumeration<['available', 'working']> &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }> &
+      Attribute.DefaultTo<'available'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::me.me', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::me.me', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    localizations: Attribute.Relation<'api::me.me', 'oneToMany', 'api::me.me'>;
+    locale: Attribute.String;
+  };
+}
+
 export interface ApiProjectProject extends Schema.CollectionType {
   collectionName: 'projects';
   info: {
@@ -1110,6 +1173,7 @@ declare module '@strapi/types' {
       'api::deploy.deploy': ApiDeployDeploy;
       'api::experience.experience': ApiExperienceExperience;
       'api::formation.formation': ApiFormationFormation;
+      'api::me.me': ApiMeMe;
       'api::project.project': ApiProjectProject;
       'api::skill.skill': ApiSkillSkill;
     }
