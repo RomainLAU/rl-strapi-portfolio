@@ -993,7 +993,7 @@ export interface ApiFormationFormation extends Schema.CollectionType {
   };
 }
 
-export interface ApiMeMe extends Schema.SingleType {
+export interface ApiMeMe extends Schema.CollectionType {
   collectionName: 'us';
   info: {
     singularName: 'me';
@@ -1010,7 +1010,7 @@ export interface ApiMeMe extends Schema.SingleType {
     };
   };
   attributes: {
-    fulllname: Attribute.String &
+    fullname: Attribute.String &
       Attribute.Required &
       Attribute.SetPluginOptions<{
         i18n: {

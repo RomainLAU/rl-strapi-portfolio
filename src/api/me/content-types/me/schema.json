@@ -1,5 +1,5 @@
 {
-  "kind": "singleType",
+  "kind": "collectionType",
   "collectionName": "us",
   "info": {
     "singularName": "me",
@@ -16,7 +16,7 @@
     }
   },
   "attributes": {
-    "fulllname": {
+    "fullname": {
       "pluginOptions": {
         "i18n": {
           "localized": false
