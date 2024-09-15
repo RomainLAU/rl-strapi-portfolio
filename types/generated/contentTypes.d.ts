@@ -1062,6 +1062,7 @@ export interface ApiProjectProject extends Schema.CollectionType {
     singularName: 'project';
     pluralName: 'projects';
     displayName: 'Projects';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -1093,6 +1094,12 @@ export interface ApiProjectProject extends Schema.CollectionType {
       }>;
     images: Attribute.Media<'images' | 'videos', true> &
       Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    link: Attribute.String &
       Attribute.SetPluginOptions<{
         i18n: {
           localized: false;
